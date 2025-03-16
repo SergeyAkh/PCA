@@ -35,28 +35,32 @@ class PCA:
             two_vectors = self.eigenvectors[np.argsort(self.eigenvalues)[:self.n_component]]
             
         return data@two_vectors.T
-            
-        
-            
-            
-    def plot_explained_varience(self, data):
-        
-        # egnvalues, ei_vec = self.pca_manual(data)
-    
+
+    def plot_explained_variance(self, data):
+
         total_egnvalues = sum(self.eigenvalues)
-        var_exp = [(i/total_egnvalues) for i in sorted(self.eigenvalues, reverse=True)]
-        #
-        # Plot the explained variance against cumulative explained variance
-        #
+
+        var_exp = [(i / total_egnvalues) for i in sorted(self.eigenvalues, reverse=True)]
+
         cum_sum_exp = np.cumsum(var_exp)
+
         plt.figure(dpi=100)
-        plt.bar(range(0,len(var_exp)), var_exp, alpha=0.5, align='center', 
-                label='Individual explained variance',color='red')
-        plt.step(range(0,len(cum_sum_exp)), cum_sum_exp, where='mid',label='Cumulative explained variance')
+
+        plt.bar(range(1, len(var_exp) + 1), var_exp, alpha=0.5, align='center', label='Individual explained variance',
+                color='red')
+
+        plt.step(range(1, len(cum_sum_exp) + 1), cum_sum_exp, where='mid', label='Cumulative explained variance',
+                 color='blue')
+
         plt.ylabel('Explained variance ratio')
         plt.xlabel('Principal component index')
+
+        plt.xticks(range(1, len(var_exp) + 1))
+
         plt.legend(loc='best')
+
         plt.tight_layout()
+
         plt.show()
         
     def plot_some_data(self, data, dict_words, names):
